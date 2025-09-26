@@ -7,7 +7,7 @@ namespace Market.Domain.Repositories
     {
         public async Task<List<Product>> GetAllProducts()
         {
-            return
+            return 
                 [
                 new(){Id=1,Description="¨Pr1",Name="Product1",Price=2.99m},
                 new(){Id=2,Description="¨Pr2",Name="Product1",Price=2.99m},

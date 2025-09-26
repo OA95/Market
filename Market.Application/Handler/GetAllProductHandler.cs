@@ -19,9 +19,9 @@ namespace Market.Application.Handler
             _productRepository = productRepository;
         }
 
-        public Task<List<Product>> Handle(GetAllProductQuery request, CancellationToken cancellationToken)
+        public async Task<List<Product>> Handle(GetAllProductQuery request, CancellationToken cancellationToken)
         {
-           return _productRepository.GetAllProducts();
+           return await    _productRepository.GetAllProducts();
         }
     }
 }

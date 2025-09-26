@@ -1,0 +1,6 @@
+1- for AddMediatR ForCQRS => Should in Program.cs
+		add ->  MediatR.Extensions.Microsoft.DependencyInjection
+			-> builder.Services.AddMediatR(typeof(GetAllProductQuery).Assembly);
+
+
+			-----------
