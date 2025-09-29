@@ -1,0 +1,158 @@
+docker exec -it market-mariadb bash
+
+root@acc55d503dab:/# ls -la
+total 76
+drwxr-xr-x   1 root root 4096 Sep 27 17:47 .
+drwxr-xr-x   1 root root 4096 Sep 27 17:47 ..
+-rwxr-xr-x   1 root root    0 Sep 27 17:47 .dockerenv
+lrwxrwxrwx   1 root root    7 Apr 22  2024 bin -> usr/bin
+drwxr-xr-x   2 root root 4096 Jul 10 14:46 bin.usr-is-merged
+drwxr-xr-x   2 root root 4096 Apr 22  2024 boot
+drwxr-xr-x   5 root root  340 Sep 27 17:47 dev
+drwxr-xr-x   2 root root 4096 Sep 15 22:20 docker-entrypoint-initdb.d
+drwxr-xr-x   1 root root 4096 Sep 27 17:47 etc
+drwxr-xr-x   1 root root 4096 Sep 15 22:20 home
+lrwxrwxrwx   1 root root    7 Apr 22  2024 lib -> usr/lib
+drwxr-xr-x   2 root root 4096 Jul 31 19:10 lib.usr-is-merged
+lrwxrwxrwx   1 root root    9 Apr 22  2024 lib64 -> usr/lib64
+drwxr-xr-x   2 root root 4096 Sep 10 02:11 media
+drwxr-xr-x   2 root root 4096 Sep 10 02:11 mnt
+drwxr-xr-x   2 root root 4096 Sep 10 02:11 opt
+dr-xr-xr-x 220 root root    0 Sep 27 17:47 proc
+drwx------   1 root root 4096 Sep 15 22:20 root
+drwxr-xr-x   1 root root 4096 Sep 15 22:21 run
+lrwxrwxrwx   1 root root    8 Apr 22  2024 sbin -> usr/sbin
+drwxr-xr-x   2 root root 4096 Jul 10 14:46 sbin.usr-is-merged
+drwxr-xr-x   2 root root 4096 Sep 10 02:11 srv
+dr-xr-xr-x  13 root root    0 Sep 27 17:47 sys
+drwxrwxrwt   1 root root 4096 Sep 27 17:47 tmp
+drwxr-xr-x   1 root root 4096 Sep 10 02:11 usr
+drwxr-xr-x   1 root root 4096 Sep 10 02:17 var
+root@acc55d503dab:/# service mysql status
+mysql: unrecognized service
+
+
+root@acc55d503dab:/# find / -name "mysql" 2>/dev/null
+/usr/lib/mysql
+/etc/mysql
+/var/lib/mysql
+/var/lib/mysql/mysql
+/var/log/mysql
+root@acc55d503dab:/# find / -name "mariadb" 2>/dev/null
+/usr/share/mariadb
+/usr/bin/mariadb
+/etc/apt/preferences.d/mariadb
+/etc/logrotate.d/mariadb
+/etc/init.d/mariadb
+root@acc55d503dab:/# ps aux | grep mysql
+mysql        1  0.1  3.0 1078352 119428 ?      Ssl  18:10   0:07 mariadbd
+root       159 20.0  0.0   3956  1920 pts/0    S+   20:08   0:00 grep --color=auto mysql
+root@acc55d503dab:/# ps aux | grep mariadb
+mysql        1  0.1  3.0 1078352 119428 ?      Ssl  18:10   0:07 mariadbd
+root       161  0.0  0.0   3956  1920 pts/0    S+   20:09   0:00 grep --color=auto mariadb
+root@acc55d503dab:/# /usr/bin/mysql -u root -p
+bash: /usr/bin/mysql: No such file or directory
+root@acc55d503dab:/# /usr/local/bin/mysql -u root -p
+bash: /usr/local/bin/mysql: No such file or directory
+root@acc55d503dab:/# which mariadb
+/usr/bin/mariadb
+
+
+root@acc55d503dab:/# mariadb -u root -p
+Enter password:
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+root@acc55d503dab:/# mariadb -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 4
+Server version: 12.0.2-MariaDB-ubu2404 mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]>
+
+
+MariaDB [(none)]> exit
+Bye
+root@acc55d503dab:/# docker inspect market-mariadb | grep -i env -A 20
+bash: docker: command not found
+root@acc55d503dab:/# exit
+exit
+
+C:\Dev\Market\Market.Api>docker inspect market-mariadb | grep -i env -A 20
+'grep' n�est pas reconnu en tant que commande interne
+ou externe, un programme ex�cutable ou un fichier de commandes.
+
+C:\Dev\Market\Market.Api>docker port market-mariadb
+3306/tcp -> 0.0.0.0:3307
+3306/tcp -> [::]:3307
+
+
+
+docker run -it --rm mysql:8.0 mysql -h host.docker.internal -P 3307 -u root -p
+
+
+Microsoft.EntityFrameworkCore
+Microsoft.EntityFrameworkCore.Tools     10.0.0-rc.1.25451.107
+Pomelo.EntityFrameworkCore.MySql
+
+
+
+dotnet ef migrations add InitialCreate
+ dotnet ef migrations add InitialCreate --project Market.Infrastructure --startup-project Market.Api
+
+ dotnet tool list --global => verification
+
+ dotnet tool install --global dotnet-ef
+ dotnet tool list --global
+
+  dotnet tool list --global
+ID de package            Version      Commandes          
+---------------------------------------------------------
+dotnet-ef                9.0.9        dotnet-ef          
+dotnet-sonarscanner      5.7.2        dotnet-sonarscanner
+
+
+dotnet ef --version
+
+
+dotnet tool uninstall --global dotnet-ef
+dotnet tool install --global dotnet-ef
+
+PM> dotnet ef database update --project Market.Infrastructure --startup-project Market.Api
+Build started...
+Build succeeded.
+Applying migration '20250929204803_InitSeedeDocker'.
+Done.
+PM> dotnet run --project Market.Api
+Utilisation des paramètres de lancement à partir de Market.Api\Properties\launchSettings.json...
+
+C:\Dev\Market\Market.Api\Program.cs(17,38): warning CS8600: Conversion de littéral ayant une valeur null ou d'une éventuelle valeur null en type non-nullable. [C:\Dev\Market\Market.Api\Market.Api.csproj]
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://localhost:5200
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Development
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: C:\Dev\Market\Market.Api
+warn: Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware[3]
+      Failed to determine the https port for redirect.
+warn: Microsoft.EntityFrameworkCore.Model.Validation[10400]
+      Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (311ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT `p`.`Id`, `p`.`Description`, `p`.`Name`, `p`.`Price`
+      FROM `Products` AS `p`
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (57ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT `p`.`Id`, `p`.`Description`, `p`.`Name`, `p`.`Price`
+      FROM `Products` AS `p`
+
+
+      http://localhost:5200/swagger/index.html
+
+
+      ca fonctionne sur Docker
